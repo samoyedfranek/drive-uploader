@@ -75,7 +75,7 @@
         <div id="debug-logs" class="space-y-1"></div>
     </div>
 
-    <script>
+       <script>
         const loginSection = document.getElementById('login-section');
         const uploadSection = document.getElementById('upload-section');
         const loginForm = document.getElementById('loginForm');
@@ -181,10 +181,18 @@
 
                 const row = document.createElement('div');
                 row.id = file.uiId;
-                row.className = "bg-white border border-gray-200 p-4 rounded-lg text-left text-sm relative overflow-hidden shadow-sm";
+                row.className = "bg-white border border-gray-200 p-4 rounded-lg text-left text-sm relative overflow-hidden shadow-sm group";
                 row.innerHTML = `
                     <div class="flex justify-between items-center mb-2">
-                        <span class="font-medium text-gray-700 truncate w-48" title="${file.name}">${file.name}</span>
+                        <div class="flex items-center space-x-2 overflow-hidden pr-2">
+                            <!-- NEW: The "X" Remove Button -->
+                            <button class="remove-btn text-gray-300 hover:text-red-500 transition-colors flex-shrink-0 cursor-pointer" title="Remove file">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <span class="font-medium text-gray-700 truncate w-40" title="${file.name}">${file.name}</span>
+                        </div>
                         <span class="stats text-xs font-medium text-gray-400">Pending</span>
                     </div>
                     <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
@@ -192,6 +200,17 @@
                     </div>
                 `;
                 uploadList.appendChild(row);
+
+                // NEW: Attach event listener to the "X" button to remove the file
+                const removeBtn = row.querySelector('.remove-btn');
+                removeBtn.onclick = () => {
+                    // 1. Remove from the pending array
+                    pendingFiles = pendingFiles.filter(f => f.uiId !== file.uiId);
+                    // 2. Remove the row from the screen
+                    row.remove();
+                    // 3. Update the "Upload All" button text/visibility
+                    updateUploadButton();
+                };
             });
 
             updateUploadButton();
@@ -220,6 +239,14 @@
             const row = document.getElementById(file.uiId);
             const statsText = row.querySelector('.stats');
             const progressBar = row.querySelector('.progress-bar');
+            const removeBtn = row.querySelector('.remove-btn');
+
+            // NEW: Hide the "X" button once the upload actually starts
+            if (removeBtn) {
+                removeBtn.classList.add('hidden');
+                // Adjust the width of the text so it expands into the space the X used to take up
+                row.querySelector('span.truncate').classList.replace('w-40', 'w-48');
+            }
 
             statsText.innerText = "Initializing...";
             statsText.classList.replace('text-gray-400', 'text-gray-500');
