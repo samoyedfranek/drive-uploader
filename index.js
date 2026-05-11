@@ -24,13 +24,24 @@ const mockDatabase = {
     ]
 };
 
+function requireAuth(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || authHeader !== 'Bearer sample-auth-token-123') {
+        console.warn("Blocked an unauthorized upload attempt.");
+        return res.status(401).json({ error: "Unauthorized. Please log in first." });
+    }
+
+    next();
+}
+
 app.post('/api/login', async (req, res) => {
     try {
         const { username, password } = req.body;
 
         const user = mockDatabase.users.find(u => u.username === username);
         if (!user) {
-            return res.status(401).json({ error: "Invalid username or password" }); 
+            return res.status(401).json({ error: "Invalid username or password" });
         }
 
         const match = await bcrypt.compare(password, user.hashedPassword);
@@ -46,9 +57,9 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.post('/get-upload-url', async (req, res) => {
+app.post('/get-upload-url', requireAuth, async (req, res) => {
     const { filename, mimeType, size } = req.body;
-    
+
     if (!filename || size === undefined || size === null) {
         return res.status(400).send('Missing file metadata.');
     }
