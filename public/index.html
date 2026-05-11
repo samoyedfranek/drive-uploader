@@ -1,188 +1,252 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SZCZUR</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex items-center justify-center p-6 flex-col">
-
-    <div id="login-section"
-        class="bg-white w-full max-w-md rounded-2xl p-8 shadow-lg border border-gray-100 transition-all duration-300">
-        <div class="text-center mb-8">
-            <svg class="mx-auto h-12 w-12 text-blue-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <h1 class="text-2xl font-semibold text-gray-800">System Access</h1>
-            <p class="text-sm text-gray-500 mt-2">Please log in to access the secure upload portal.</p>
-        </div>
-
-        <form id="loginForm" class="space-y-5">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" id="username" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+    <body
+        class="bg-gray-50 text-gray-800 font-sans min-h-screen flex items-center justify-center p-6 flex-col"
+    >
+        <div
+            id="login-section"
+            class="bg-white w-full max-w-md rounded-2xl p-8 shadow-lg border border-gray-100 transition-all duration-300"
+        >
+            <div class="text-center mb-8">
+                <svg
+                    class="mx-auto h-12 w-12 text-blue-600 mb-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                </svg>
+                <h1 class="text-2xl font-semibold text-gray-800">SZCZUR</h1>
+                <p class="text-sm text-gray-500 mt-2">Zaloguj się</p>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="password" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                        >Nazwa</label
+                    >
+                    <input
+                        type="text"
+                        id="username"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                        >Hasło</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                </div>
+                <div
+                    id="login-error"
+                    class="hidden text-red-500 text-sm font-medium text-center"
+                >
+                    Złe dane.
+                </div>
+                <button
+                    type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg shadow transition-colors duration-200"
+                >
+                    Zaloguj
+                </button>
+            </form>
+        </div>
+
+        <div
+            id="upload-section"
+            class="hidden bg-white w-full max-w-lg rounded-2xl p-8 text-center shadow-lg border border-gray-100 transition-all duration-300"
+        >
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold text-gray-800">SZCZUR</h1>
+                <button
+                    id="logoutBtn"
+                    class="text-sm text-gray-500 hover:text-red-500 transition-colors"
+                >
+                    Log out
+                </button>
             </div>
-            <div id="login-error" class="hidden text-red-500 text-sm font-medium text-center">Invalid credentials.</div>
-            <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg shadow transition-colors duration-200">
-                Authenticate
-            </button>
-        </form>
-    </div>
 
-    <div id="upload-section"
-        class="hidden bg-white w-full max-w-lg rounded-2xl p-8 text-center shadow-lg border border-gray-100 transition-all duration-300">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-gray-800">Secure File Upload</h1>
-            <button id="logoutBtn" class="text-sm text-gray-500 hover:text-red-500 transition-colors">Log out</button>
+            <div
+                id="drop-zone"
+                class="border-2 border-dashed border-blue-400 bg-blue-50/50 rounded-xl p-10 cursor-pointer hover:bg-blue-50 transition-colors duration-200 group"
+            >
+                <svg
+                    class="mx-auto h-12 w-12 text-blue-400 group-hover:text-blue-500 mb-3 transition-colors"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                >
+                    <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <p class="text-blue-600 font-medium">Przeciągnij pliki</p>
+                <p class="text-sm text-gray-500 mt-1">lub wybierz</p>
+                <input type="file" id="fileInput" class="hidden" multiple />
+            </div>
+
+            <div id="action-area" class="hidden mt-6">
+                <button
+                    id="uploadAllBtn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl w-full shadow-md transition-all"
+                >
+                    Prześlij
+                </button>
+            </div>
+
+            <div id="upload-list" class="mt-6 space-y-3"></div>
         </div>
 
-        <div id="drop-zone"
-            class="border-2 border-dashed border-blue-400 bg-blue-50/50 rounded-xl p-10 cursor-pointer hover:bg-blue-50 transition-colors duration-200 group">
-            <svg class="mx-auto h-12 w-12 text-blue-400 group-hover:text-blue-500 mb-3 transition-colors"
-                stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                <path
-                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <p class="text-blue-600 font-medium">Drag & drop files here</p>
-            <p class="text-sm text-gray-500 mt-1">or click to browse from your computer</p>
-            <input type="file" id="fileInput" class="hidden" multiple>
+        <div
+            id="debug-console"
+            class="hidden mt-6 bg-gray-900 border border-gray-700 w-full max-w-lg rounded-xl p-4 text-left font-mono text-xs text-green-400 h-32 overflow-y-auto shadow-inner"
+        >
+            <div id="debug-logs" class="space-y-1"></div>
         </div>
 
-        <div id="action-area" class="hidden mt-6">
-            <button id="uploadAllBtn"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl w-full shadow-md transition-all">
-                Upload All Files
-            </button>
-        </div>
+        <script>
+            const loginSection = document.getElementById("login-section");
+            const uploadSection = document.getElementById("upload-section");
+            const loginForm = document.getElementById("loginForm");
+            const loginError = document.getElementById("login-error");
+            const logoutBtn = document.getElementById("logoutBtn");
 
-        <div id="upload-list" class="mt-6 space-y-3"></div>
-    </div>
+            const fileInput = document.getElementById("fileInput");
+            const dropZone = document.getElementById("drop-zone");
+            const uploadList = document.getElementById("upload-list");
+            const actionArea = document.getElementById("action-area");
+            const uploadAllBtn = document.getElementById("uploadAllBtn");
 
-    <div id="debug-console"
-        class="hidden mt-6 bg-gray-900 border border-gray-700 w-full max-w-lg rounded-xl p-4 text-left font-mono text-xs text-green-400 h-32 overflow-y-auto shadow-inner">
-        <div id="debug-logs" class="space-y-1"></div>
-    </div>
+            const debugConsole = document.getElementById("debug-console");
+            const debugLogs = document.getElementById("debug-logs");
 
-       <script>
-        const loginSection = document.getElementById('login-section');
-        const uploadSection = document.getElementById('upload-section');
-        const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('login-error');
-        const logoutBtn = document.getElementById('logoutBtn');
+            window.addEventListener("DOMContentLoaded", () => {
+                const savedToken = localStorage.getItem("authToken");
+                if (savedToken) {
+                    logDebug("Session restored from cache.");
 
-        const fileInput = document.getElementById('fileInput');
-        const dropZone = document.getElementById('drop-zone');
-        const uploadList = document.getElementById('upload-list');
-        const actionArea = document.getElementById('action-area');
-        const uploadAllBtn = document.getElementById('uploadAllBtn');
-
-        const debugConsole = document.getElementById('debug-console');
-        const debugLogs = document.getElementById('debug-logs');
-
-        let pendingFiles = [];
-
-        function logDebug(message) {
-            debugConsole.classList.remove('hidden');
-            const time = new Date().toLocaleTimeString();
-            debugLogs.innerHTML += `<div>[${time}] ${message}</div>`;
-            debugConsole.scrollTop = debugConsole.scrollHeight;
-        }
-
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const submitBtn = loginForm.querySelector('button');
-
-            submitBtn.innerText = 'Verifying...';
-            submitBtn.disabled = true;
-            loginError.classList.add('hidden');
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    logDebug(`Auth Success: User '${username}' logged in.`);
-                    if (data.token) localStorage.setItem('authToken', data.token);
-
-                    loginSection.classList.add('hidden');
-                    uploadSection.classList.remove('hidden');
-                } else {
-                    loginError.classList.remove('hidden');
-                    logDebug(`Auth Failed: Invalid credentials.`);
+                    loginSection.classList.add("hidden");
+                    uploadSection.classList.remove("hidden");
                 }
-            } catch (error) {
-                loginError.innerText = "Network error communicating with server.";
-                loginError.classList.remove('hidden');
-            } finally {
-                submitBtn.innerText = 'Authenticate';
-                submitBtn.disabled = false;
+            });
+
+            let pendingFiles = [];
+
+            function logDebug(message) {
+                debugConsole.classList.remove("hidden");
+                const time = new Date().toLocaleTimeString();
+                debugLogs.innerHTML += `<div>[${time}] ${message}</div>`;
+                debugConsole.scrollTop = debugConsole.scrollHeight;
             }
-        });
 
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('authToken');
-            uploadSection.classList.add('hidden');
-            loginSection.classList.remove('hidden');
-            document.getElementById('password').value = '';
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const submitBtn = loginForm.querySelector("button");
 
-            pendingFiles = [];
-            uploadList.innerHTML = '';
-            updateUploadButton();
-            logDebug(`User logged out.`);
-        });
+                submitBtn.innerText = "Verifying...";
+                submitBtn.disabled = true;
+                loginError.classList.add("hidden");
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('bg-blue-100', 'border-blue-500');
-        });
+                try {
+                    const response = await fetch("/api/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, password }),
+                    });
 
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('bg-blue-100', 'border-blue-500');
-        });
+                    if (response.ok) {
+                        const data = await response.json();
+                        logDebug(`Auth Success: User '${username}' logged in.`);
+                        if (data.token)
+                            localStorage.setItem("authToken", data.token);
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('bg-blue-100', 'border-blue-500');
-            if (e.dataTransfer.files.length) {
-                handleFileSelection(Array.from(e.dataTransfer.files));
-            }
-        });
+                        loginSection.classList.add("hidden");
+                        uploadSection.classList.remove("hidden");
+                    } else {
+                        loginError.classList.remove("hidden");
+                        logDebug(`Auth Failed: Invalid credentials.`);
+                    }
+                } catch (error) {
+                    loginError.innerText =
+                        "Network error communicating with server.";
+                    loginError.classList.remove("hidden");
+                } finally {
+                    submitBtn.innerText = "Authenticate";
+                    submitBtn.disabled = false;
+                }
+            });
 
-        dropZone.onclick = () => fileInput.click();
+            logoutBtn.addEventListener("click", () => {
+                localStorage.removeItem("authToken");
+                uploadSection.classList.add("hidden");
+                loginSection.classList.remove("hidden");
+                document.getElementById("password").value = "";
 
-        fileInput.onchange = (e) => {
-            handleFileSelection(Array.from(e.target.files));
-            fileInput.value = '';
-        };
+                pendingFiles = [];
+                uploadList.innerHTML = "";
+                updateUploadButton();
+                logDebug(`User logged out.`);
+            });
 
-        function handleFileSelection(files) {
-            files.forEach(file => {
-                file.uiId = 'file-' + Math.random().toString(36).substr(2, 9);
-                pendingFiles.push(file);
+            dropZone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZone.classList.add("bg-blue-100", "border-blue-500");
+            });
 
-                const row = document.createElement('div');
-                row.id = file.uiId;
-                row.className = "bg-white border border-gray-200 p-4 rounded-lg text-left text-sm relative overflow-hidden shadow-sm group";
-                row.innerHTML = `
+            dropZone.addEventListener("dragleave", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("bg-blue-100", "border-blue-500");
+            });
+
+            dropZone.addEventListener("drop", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("bg-blue-100", "border-blue-500");
+                if (e.dataTransfer.files.length) {
+                    handleFileSelection(Array.from(e.dataTransfer.files));
+                }
+            });
+
+            dropZone.onclick = () => fileInput.click();
+
+            fileInput.onchange = (e) => {
+                handleFileSelection(Array.from(e.target.files));
+                fileInput.value = "";
+            };
+
+            function handleFileSelection(files) {
+                files.forEach((file) => {
+                    file.uiId =
+                        "file-" + Math.random().toString(36).substr(2, 9);
+                    pendingFiles.push(file);
+
+                    const row = document.createElement("div");
+                    row.id = file.uiId;
+                    row.className =
+                        "bg-white border border-gray-200 p-4 rounded-lg text-left text-sm relative overflow-hidden shadow-sm group";
+                    row.innerHTML = `
                     <div class="flex justify-between items-center mb-2">
                         <div class="flex items-center space-x-2 overflow-hidden pr-2">
                             <!-- NEW: The "X" Remove Button -->
@@ -199,139 +263,163 @@
                         <div class="progress-bar bg-gray-300 h-2 rounded-full transition-all duration-300" style="width: 100%"></div>
                     </div>
                 `;
-                uploadList.appendChild(row);
+                    uploadList.appendChild(row);
 
-                // NEW: Attach event listener to the "X" button to remove the file
-                const removeBtn = row.querySelector('.remove-btn');
-                removeBtn.onclick = () => {
-                    // 1. Remove from the pending array
-                    pendingFiles = pendingFiles.filter(f => f.uiId !== file.uiId);
-                    // 2. Remove the row from the screen
-                    row.remove();
-                    // 3. Update the "Upload All" button text/visibility
-                    updateUploadButton();
-                };
-            });
-
-            updateUploadButton();
-        }
-
-        function updateUploadButton() {
-            if (pendingFiles.length > 0) {
-                actionArea.classList.remove('hidden');
-                uploadAllBtn.innerText = `Upload ${pendingFiles.length} File${pendingFiles.length > 1 ? 's' : ''}`;
-            } else {
-                actionArea.classList.add('hidden');
-            }
-        }
-
-        uploadAllBtn.onclick = () => {
-            const filesToUpload = [...pendingFiles];
-            pendingFiles = [];
-            updateUploadButton();
-
-            filesToUpload.forEach(file => {
-                uploadFile(file);
-            });
-        };
-
-        async function uploadFile(file, retryCount = 0) {
-            const row = document.getElementById(file.uiId);
-            const statsText = row.querySelector('.stats');
-            const progressBar = row.querySelector('.progress-bar');
-            const removeBtn = row.querySelector('.remove-btn');
-
-            // NEW: Hide the "X" button once the upload actually starts
-            if (removeBtn) {
-                removeBtn.classList.add('hidden');
-                // Adjust the width of the text so it expands into the space the X used to take up
-                row.querySelector('span.truncate').classList.replace('w-40', 'w-48');
-            }
-
-            statsText.innerText = "Initializing...";
-            statsText.classList.replace('text-gray-400', 'text-gray-500');
-            progressBar.classList.replace('bg-gray-300', 'bg-blue-500');
-            progressBar.style.width = '0%';
-
-            logDebug(`--- STARTING UPLOAD: ${file.name} ---`);
-
-            try {
-                const token = localStorage.getItem('authToken');
-
-                const initRes = await fetch('/get-upload-url', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        filename: file.name,
-                        mimeType: 'application/octet-stream',
-                        size: file.size
-                    })
+                    const removeBtn = row.querySelector(".remove-btn");
+                    removeBtn.onclick = () => {
+                        pendingFiles = pendingFiles.filter(
+                            (f) => f.uiId !== file.uiId,
+                        );
+                        row.remove();
+                        updateUploadButton();
+                    };
                 });
 
-                if (!initRes.ok) throw new Error("Failed to get upload session");
-
-                const { uploadUrl } = await initRes.json();
-                const xhr = new XMLHttpRequest();
-                let startTime = Date.now();
-
-                xhr.upload.onprogress = (e) => {
-                    if (e.lengthComputable) {
-                        const percent = (e.loaded / e.total) * 100;
-                        const duration = (Date.now() - startTime) / 1000;
-                        const bps = e.loaded / duration;
-
-                        let speedText = bps > 1024 * 1024
-                            ? (bps / (1024 * 1024)).toFixed(2) + " MB/s"
-                            : (bps / 1024).toFixed(2) + " KB/s";
-
-                        progressBar.style.width = percent + '%';
-                        statsText.innerText = `${Math.round(percent)}% • ${speedText}`;
-                    }
-                };
-
-                xhr.onload = () => {
-                    if (xhr.status === 200 || xhr.status === 201 || xhr.status === 308) {
-                        logDebug(`UPLOAD SUCCESS: ${file.name}`);
-                        statsText.innerText = "Upload Complete";
-                        statsText.classList.replace('text-gray-500', 'text-green-600');
-                        progressBar.classList.replace('bg-blue-500', 'bg-green-500');
-                    } else {
-                        handleRetry(file, row, retryCount);
-                    }
-                };
-
-                xhr.onerror = () => handleRetry(file, row, retryCount);
-
-                xhr.open('PUT', uploadUrl, true);
-                xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-                xhr.send(file);
-
-            } catch (error) {
-                logDebug(`ERROR: ${error.message}`);
-                handleRetry(file, row, retryCount);
+                updateUploadButton();
             }
-        }
 
-        function handleRetry(file, row, retryCount) {
-            const statsText = row.querySelector('.stats');
-            const progressBar = row.querySelector('.progress-bar');
-
-            if (retryCount < 3) {
-                statsText.innerText = `Retrying... (${retryCount + 1}/3)`;
-                statsText.classList.add('text-orange-500');
-                setTimeout(() => uploadFile(file, retryCount + 1), 3000);
-            } else {
-                logDebug(`FAILED: ${file.name}.`);
-                statsText.innerText = "Upload Failed";
-                statsText.classList.replace('text-gray-500', 'text-red-500');
-                statsText.classList.replace('text-orange-500', 'text-red-500');
-                progressBar.classList.replace('bg-blue-500', 'bg-red-500');
+            function updateUploadButton() {
+                if (pendingFiles.length > 0) {
+                    actionArea.classList.remove("hidden");
+                    uploadAllBtn.innerText = `Upload ${pendingFiles.length} File${pendingFiles.length > 1 ? "s" : ""}`;
+                } else {
+                    actionArea.classList.add("hidden");
+                }
             }
-        }
-    </script>
-</body>
 
+            uploadAllBtn.onclick = () => {
+                const filesToUpload = [...pendingFiles];
+                pendingFiles = [];
+                updateUploadButton();
+
+                filesToUpload.forEach((file) => {
+                    uploadFile(file);
+                });
+            };
+
+            async function uploadFile(file, retryCount = 0) {
+                const row = document.getElementById(file.uiId);
+                const statsText = row.querySelector(".stats");
+                const progressBar = row.querySelector(".progress-bar");
+                const removeBtn = row.querySelector(".remove-btn");
+
+                if (removeBtn) {
+                    removeBtn.classList.add("hidden");
+                    row.querySelector("span.truncate").classList.replace(
+                        "w-40",
+                        "w-48",
+                    );
+                }
+
+                statsText.innerText = "Initializing...";
+                statsText.classList.replace("text-gray-400", "text-gray-500");
+                progressBar.classList.replace("bg-gray-300", "bg-blue-500");
+                progressBar.style.width = "0%";
+
+                logDebug(`--- STARTING UPLOAD: ${file.name} ---`);
+
+                try {
+                    const token = localStorage.getItem("authToken");
+
+                    const initRes = await fetch("/get-upload-url", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            filename: file.name,
+                            mimeType: "application/octet-stream",
+                            size: file.size,
+                        }),
+                    });
+
+                    if (initRes.status === 401) {
+                        logDebug("Session expired. Logging out...");
+                        logoutBtn.click();
+                        return;
+                    }
+
+                    if (!initRes.ok)
+                        throw new Error("Failed to get upload session");
+
+                    const { uploadUrl } = await initRes.json();
+                    const xhr = new XMLHttpRequest();
+                    let startTime = Date.now();
+
+                    xhr.upload.onprogress = (e) => {
+                        if (e.lengthComputable) {
+                            const percent = (e.loaded / e.total) * 100;
+                            const duration = (Date.now() - startTime) / 1000;
+                            const bps = e.loaded / duration;
+
+                            let speedText =
+                                bps > 1024 * 1024
+                                    ? (bps / (1024 * 1024)).toFixed(2) + " MB/s"
+                                    : (bps / 1024).toFixed(2) + " KB/s";
+
+                            progressBar.style.width = percent + "%";
+                            statsText.innerText = `${Math.round(percent)}% • ${speedText}`;
+                        }
+                    };
+
+                    xhr.onload = () => {
+                        if (
+                            xhr.status === 200 ||
+                            xhr.status === 201 ||
+                            xhr.status === 308
+                        ) {
+                            logDebug(`UPLOAD SUCCESS: ${file.name}`);
+                            statsText.innerText = "Upload Complete";
+                            statsText.classList.replace(
+                                "text-gray-500",
+                                "text-green-600",
+                            );
+                            progressBar.classList.replace(
+                                "bg-blue-500",
+                                "bg-green-500",
+                            );
+                        } else {
+                            handleRetry(file, row, retryCount);
+                        }
+                    };
+
+                    xhr.onerror = () => handleRetry(file, row, retryCount);
+
+                    xhr.open("PUT", uploadUrl, true);
+                    xhr.setRequestHeader(
+                        "Content-Type",
+                        "application/octet-stream",
+                    );
+                    xhr.send(file);
+                } catch (error) {
+                    logDebug(`ERROR: ${error.message}`);
+                    handleRetry(file, row, retryCount);
+                }
+            }
+
+            function handleRetry(file, row, retryCount) {
+                const statsText = row.querySelector(".stats");
+                const progressBar = row.querySelector(".progress-bar");
+
+                if (retryCount < 3) {
+                    statsText.innerText = `Retrying... (${retryCount + 1}/3)`;
+                    statsText.classList.add("text-orange-500");
+                    setTimeout(() => uploadFile(file, retryCount + 1), 3000);
+                } else {
+                    logDebug(`FAILED: ${file.name}.`);
+                    statsText.innerText = "Upload Failed";
+                    statsText.classList.replace(
+                        "text-gray-500",
+                        "text-red-500",
+                    );
+                    statsText.classList.replace(
+                        "text-orange-500",
+                        "text-red-500",
+                    );
+                    progressBar.classList.replace("bg-blue-500", "bg-red-500");
+                }
+            }
+        </script>
+    </body>
 </html>
